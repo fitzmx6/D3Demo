@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" charset="UTF-8">
+        <title>D3</title>
+
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+        <meta http-equiv="X-UA-Compatible" content="IE=100,chrome=1">
+        <meta name="application-name" content="D3">
+        <meta name="author" content="D3">
+        <meta name="description" content="D3 Test">
+        <meta name="date" content="Sat Aug 09 2014 14:49:37 GMT-0400 (Eastern Daylight Time)">
+        <meta name="keywords" content="HTML5, CSS3, Website">
+        <meta name="robots" content="index,follow">
+
+        <link type="text/css" rel="stylesheet" href="css/d3.css" media="all">
+        <script type="text/javascript" src="js/modernizr.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+        <!-- Chrome v31+ for Android -->
+        <link rel="shortcut icon" sizes="196x196" href="images/favicon/touch-icon-196x196.png">
+        <link rel="shortcut icon" href="images/favicon/apple-touch-icon.png">
+
+        <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+        <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon-57x57-precomposed.png">
+        <!-- For the iPad mini and the first- and second-generation iPad on iOS ≤ 6: -->
+        <link rel="apple-touch-icon" sizes="72x72" href="images/favicon/apple-touch-icon-72x72-precomposed.png">
+        <!-- For the iPad mini and the first- and second-generation iPad on iOS ≥ 7:
+        <link rel="apple-touch-icon" sizes="76x76" href="images/favicon/apple-touch-icon-76x76-precomposed.png">-->
+        <!-- For iPhone with high-resolution Retina display running iOS ≤ 6: -->
+        <link rel="apple-touch-icon" sizes="114x114" href="images/favicon/apple-touch-icon-114x114-precomposed.png">
+        <!-- For iPhone with high-resolution Retina display running iOS ≥ 7:
+        <link rel="apple-touch-icon" sizes="120x120" href="images/favicon/apple-touch-icon-120x120-precomposed.png">-->
+        <!-- For iPad with high-resolution Retina display running iOS ≤ 6: -->
+        <link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-touch-icon-144x144-precomposed.png">
+        <!-- For iPad with high-resolution Retina display running iOS ≥ 7:
+        <link rel="apple-touch-icon" sizes="152x152" href="images/favicon/apple-touch-icon-152x152-precomposed.png">-->
+
+        <!-- Windows Icon -->
+        <meta name="msapplication-TileImage" content="images/favicon/apple-touch-icon-144x144-precomposed.png">
+        <meta name="msapplication-TileColor" content="#222222">
+
+        <!-- <meta name="msapplication-square150x150logo" content="images/favicon/windows-icon-150x150.png"/>
+        <meta name="msapplication-wide310x150logo" content="images/favicon/windows-icon-310x150.png"/>
+        <meta name="msapplication-square310x310logo" content="images/favicon/windows-icon-310x310.png"/> -->
+
+        
+        <!--[if (gte IE 6)&(lte IE 9)]>
+        <script type="text/javascript" src="JS/PIE.js"></script>
+        <![endif]-->
+        <!--[if (gte IE 6)&(lte IE 8)]>
+        <script type="text/javascript" src="JS/selectivizr.js"></script>
+        <![endif]-->
+    
+    <style>
+        .axis path {
+            fill: none;
+            stroke: #777;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family: Lato;
+            font-size: 13px;
+        }
+        body {
+            padding:20px 0 0 40px;
+        }
+        footer {
+            margin-top: 40px;
+        }
+    </style>
+    </head>
+
+
+    <body>
+
+        <header class="Page">
+            <div class="Wrapper">
+                <h1>D3 Demo</h1>
+            </div>
+        </header>
+
+
+        <main>
+            <div class="container">
+                <div class="jumbotron">
+                    <svg id="visualisation" width="1000" height="500"></svg>
+                </div>
+            </div>
+        </main>
+
+        <footer class="Page">
+            <div class="Wrapper">
+                <p>
+    D3 <time datetime="2015">2015</time>
+</p>
+            </div>
+        </footer>
+
+        <script>
+            var data = [{
+                "sale": "202",
+                "year": "2000"
+            }, {
+                "sale": "215",
+                "year": "2001"
+            }, {
+                "sale": "179",
+                "year": "2002"
+            }, {
+                "sale": "199",
+                "year": "2003"
+            }, {
+                "sale": "134",
+                "year": "2003"
+            }, {
+                "sale": "176",
+                "year": "2010"
+            }];
+
+            var data2 = [{
+                "sale": "152",
+                "year": "2000"
+            }, {
+                "sale": "189",
+                "year": "2002"
+            }, {
+                "sale": "179",
+                "year": "2004"
+            }, {
+                "sale": "199",
+                "year": "2006"
+            }, {
+                "sale": "134",
+                "year": "2008"
+            }, {
+                "sale": "180",
+                "year": "2010"
+            }];
+
+            var vis = d3.select("#visualisation"),
+                WIDTH = 1000,
+                HEIGHT = 500,
+                MARGINS = {
+                    top: 20,
+                    right: 20,
+                    bottom: 20,
+                    left: 50
+                },
+                xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([2000,2010]),
+                yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([134,215]),
+                xAxis = d3.svg.axis()
+                    .scale(xScale),
+                  
+                yAxis = d3.svg.axis()
+                    .scale(yScale);
+
+                vis.append("svg:g")
+                    .attr("class","axis")
+                    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                    .call(xAxis);
+
+                yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left");
+
+                vis.append("svg:g")
+                    .attr("class","axis")
+                    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                    .call(yAxis);
+
+                var lineGen = d3.svg.line()
+                    .x(function(d) {
+                        return xScale(d.year);
+                    })
+                    .y(function(d) {
+                        return yScale(d.sale);
+                    })
+                    .interpolate("basis");
+
+                vis.append('svg:path')
+                    .attr('d', lineGen(data))
+                    .attr('stroke', 'green')
+                    .attr('stroke-width', 2)
+                    .attr('fill', 'none');
+
+                vis.append('svg:path')
+                  .attr('d', lineGen(data2))
+                  .attr('stroke', 'blue')
+                  .attr('stroke-width', 2)
+                  .attr('fill', 'none');
+        </script>
+    </body>
+</html>

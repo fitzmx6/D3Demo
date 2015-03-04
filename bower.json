@@ -1,0 +1,19 @@
+{
+  "name": "d3",
+  "version": "0.0.0",
+  "dependencies": {
+    "bootstrap": "*",
+    "css3pie": "*",
+    "selectivizr": "~1.0",
+    "background-size-polyfill": "~0.2",
+    "box-sizing-polyfill": "*",
+    "respond": "~1.4",
+    "css3-mediaqueries-js": "*",
+    "jquery": "~1.11",
+    "BrowserDetection.js": "*",
+    "modernizr": "~2.8",
+    "CSSSassCollection": "*",
+    "normalize-css": "~3.0"
+  }
+}
+
